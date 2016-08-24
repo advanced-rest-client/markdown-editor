@@ -1,0 +1,41 @@
+<!--
+@license
+Copyright 2016 Pawel Psztyc, The ARC team
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../arc-icons/arc-icons.html">
+<link rel="import" href="markdown-editor.html">
+
+<!--
+The `<markdown-icon-button>` renders button that opens markdown editor on demand.
+
+@group UI Elements
+@element markdown-icon-button
+@demo demo/index.html
+-->
+
+<dom-module id="markdown-icon-button">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+    <paper-icon-button icon="arc:markdown" id="icon" on-tap="open"></paper-icon-button>
+    <paper-tooltip for="icon" fit-to-visible-bounds>Open a markdown editor</paper-tooltip>
+    <markdown-editor id="editor" opened="{{opened}}" value="{{value}}" theme="[[theme]]"></markdown-editor>
+  </template>
+  <script src="markdown-icon-button.js"></script>
+</dom-module>
