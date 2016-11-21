@@ -1,18 +1,26 @@
 language: node_js
 sudo: required
-before_script:
-- npm install -g bower polylint web-component-tester
-- bower install
-- polylint --no-recursion
+dist: trusty
 node_js: stable
+before_script:
+- npm install --silent bower polymer-cli
+- bower install --silent
 addons:
-  firefox: '46.0'
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
   sauce_connect: true
 script:
-- xvfb-run wct
-dist: trusty
+- node_modules/.bin/polymer lint markdown-editor.html
+- node_modules/.bin/polymer test --plugin sauce --job-name "markdown-editor:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+cache:
+  directories:
+  - bower_components
+  - node_modules
+branches:
+  only:
+  - stage
+  - develop
+after_success:
+- node tasks/ci.js
+env:
+  global:
+  - secure: W2SsyLWiV4HzRm6H2QfKlavArm0I2JPtuUyWrqJIMWsO8i98zGW2dv9dqhj1t7w57MRjw7CqcPuTgk2Mo4pLQ6ygkQV5wYOdRFPqLcIfxM39btdelQxH+lSjDMBJHfxiJDQHZ2zXq/g3ctN2Dz4xQk6ARGWd4s9kq9hygCF3iAXcftAhqVdSZgG0BQK31R+K1rbb9cO9p5OwR69MuPsLP8ZV/FuAZlE2z7pMEHRZSQjYUf0x5VVwot0fgulgxO2RJsMOGQXRoXlqVPETZlWqYKqek7CFv0aXGEvhU/bqzG4H/fziZ13+OlhIjqklQkJrpFocIjOU1m9sLwN0MUT2Z9x15INniwu5qtY1pUw4XeknzwrNFk5VwiCW1MvXhbJ7B/RhXrPPB509AZiW5NFllYHwepOtxGk+5RuKSoXZsLStMhUxSJj5aFXUhrSoAkBhN+GZK0JXgwRuA+nbSPWzWv/tep+hn4EaLgxhAkp/MyxSpGN9hQ9lBf2/35ulJb2UIf3wKywxIsTDwtomb4TLXIW2neH1p2tJzJTiFxuUY4sB/WKs2r62/sATUWuiwpJqrY+ZVgJUPiG5FXQhwCSKAtx5oKBMQlA9cJIbnXaTrC68gh4SOn89B0zlZnYwX6tHc2jGNez80qhpuUc1dIJORdjXOwiJcosZYvd3IjqTfQw=
+  - secure: gGGHqzxTK7tk1oT875quL+URAT1m/Vat0Jl90++0ibe1hAkzMmXce+WQvWBNBevWIJxgwLFvc/kUSvhaIxeo10sNA8nriEwr5JZEg+uBQifYkhuTHAPA1+o6kE/sR87pNkG8MI1hOFjrm5FNsHe6rnHKIxOYCdMKbLwZQ1IoCTiyyPPF1BxWPTEiWvi8VFQMVvYN7QLXgIzS24RebJPHKO9ENurml1p13kc7FG79HXWHEP4XF665U27jsqWk21GkjkPfYly3iE0xX3n5XVglDaku/I1uBKU66bUmCFhkLC8luDf3AM76/c3kAPbH+nUpK5nxduQaPMHiNw59G7yBKcrhdweyPlswew5IAKWsvKs9qBvt0+hsVX8WfcIibyG81udcwi39um7sGxLnMgccQs0MSZOF8+T+aVo6yPcvGfx96+QEm1xiqnL/CYRzAxA4ELJlCnPBqMN90DI7hKyDtsFRcBCBsAjNQ99u89BWheHsn+RfK2Yiv/Z3IjTBTcWOCUXnG3IaJXvV4ZTnYiC9kHunOdfRJw7TZS82TSLxu4Dvs+eXiT4+pOPWKYKvhvGBpfQui5Tu6yHkewrhFHpfGFSK0lkSoDzN/UF9zioydvJ2bWcvfl5wkV+Yad3k/D43VuYX8lzWYdO8N+ZNmXK96QX3C9qegyyQ9hinHh+0lCY=

@@ -1,6 +1,7 @@
 {
   "name": "markdown-editor",
   "description": "A markdown editor.",
+  "license": "Apache-2.0 OR CC-BY-4.0",
   "authors": [
     "The Advanced REST Client authors"
   ],
